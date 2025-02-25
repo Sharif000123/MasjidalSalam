@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masjid as Salam - Chur</title>
+    <style>
+        :root {
+            --primary-green: #2E7D32;
+            --secondary-green: #388E3C;
+            --light-green: #C8E6C9;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+        }
+
+        header {
+            background-color: var(--primary-green);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 20px;
+        }
+
+        .prayer-times {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .card h2 {
+            color: var(--secondary-green);
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--light-green);
+            padding-bottom: 0.5rem;
+        }
+
+        .prayer-time-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .calendar {
+            background-color: var(--light-green);
+            padding: 2rem;
+            border-radius: 10px;
+            margin-top: 2rem;
+        }
+
+        footer {
+            background-color: var(--primary-green);
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .prayer-times {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Masjid as Salam</h1>
+        <p>Chur, Switzerland</p>
+    </header>
+
+    <div class="container">
+        <div class="card">
+            <h2>Today's Prayer Times</h2>
+            <div class="prayer-times" id="prayerTimes">
+                <!-- Dynamic content will be loaded here -->
+                <div class="prayer-time-item">
+                    <span>Fajr:</span>
+                    <span id="fajr">-:-</span>
+                </div>
+                <div class="prayer-time-item">
+                    <span>Dhuhr:</span>
+                    <span id="dhuhr">-:-</span>
+                </div>
+                <div class="prayer-time-item">
+                    <span>Asr:</span>
+                    <span id="asr">-:-</span>
+                </div>
+                <div class="prayer-time-item">
+                    <span>Maghrib:</span>
+                    <span id="maghrib">-:-</span>
+                </div>
+                <div class="prayer-time-item">
+                    <span>Isha:</span>
+                    <span id="isha">-:-</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" style="margin-top: 2rem;">
+            <h2>Weekly Schedule</h2>
+            <div class="schedule">
+                <p>📅 Friday Prayer: 1:30 PM</p>
+                <p>📚 Daily Dars: After Fajr Prayer</p>
+                <p>📖 Quran Classes: Weekdays 4-6 PM</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Contact: info@masjidasalam.ch | Tel: +41 81 123 45 67</p>
+        <p>© 2023 Masjid as Salam - Chur</p>
+    </footer>
+
+    <script>
+        // IMPORTANT: You need to replace this with actual API integration from izrs.ch
+        // This is just a simulation
+        function updatePrayerTimes() {
+            // Simulated API response (replace with real API call)
+            const prayerTimes = {
+                fajr: "05:00",
+                dhuhr: "13:30",
+                asr: "17:15",
+                maghrib: "20:45",
+                isha: "22:00"
+            };
+
+            document.getElementById('fajr').textContent = prayerTimes.fajr;
+            document.getElementById('dhuhr').textContent = prayerTimes.dhuhr;
+            document.getElementById('asr').textContent = prayerTimes.asr;
+            document.getElementById('maghrib').textContent = prayerTimes.maghrib;
+            document.getElementById('isha').textContent = prayerTimes.isha;
+        }
+
+        // Update times on load and every minute
+        updatePrayerTimes();
+        setInterval(updatePrayerTimes, 60000);
+
+        // To integrate with izrs.ch API:
+        // 1. Register for their API access
+        // 2. Replace the simulated prayerTimes object with actual API fetch
+        // 3. Handle CORS if necessary using a proxy server
+    </script>
+</body>
+</html>
