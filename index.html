@@ -1,186 +1,186 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Masjid al Salam - Sevelen</title>
     <style>
-        :root {
-            --primary-green: #2E7D32;
-            --secondary-green: #388E3C;
-            --light-green: #C8E6C9;
-        }
+      :root {
+        --primary-green: #2e7d32;
+        --secondary-green: #388e3c;
+        --light-green: #c8e6c9;
+      }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
 
-        body {
-            background-color: #f5f5f5;
-        }
+      body {
+        background-color: #ffffff;
+      }
 
-        header {
-            background-color: var(--primary-green);
-            color: white;
-            text-align: center;
-            padding: 2rem;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
+      header {
+        background-color: var(--primary-green);
+        color: white;
+        text-align: center;
+        padding: 2rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
 
-        .container {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 20px;
-        }
+      .container {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 0 20px;
+      }
 
+      .prayer-times {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin-bottom: 3rem;
+      }
+
+      .card {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .card h2 {
+        color: var(--secondary-green);
+        margin-bottom: 1rem;
+        border-bottom: 2px solid var(--light-green);
+        padding-bottom: 0.5rem;
+      }
+
+      .prayer-time-item {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.5rem;
+      }
+
+      .calendar {
+        background-color: var(--light-green);
+        padding: 2rem;
+        border-radius: 10px;
+        margin-top: 2rem;
+      }
+
+      footer {
+        background-color: var(--primary-green);
+        color: white;
+        text-align: center;
+        padding: 1rem;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
         .prayer-times {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
+          grid-template-columns: 1fr;
         }
-
-        .card {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-
-        .card h2 {
-            color: var(--secondary-green);
-            margin-bottom: 1rem;
-            border-bottom: 2px solid var(--light-green);
-            padding-bottom: 0.5rem;
-        }
-
-        .prayer-time-item {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 0.5rem;
-        }
-
-        .calendar {
-            background-color: var(--light-green);
-            padding: 2rem;
-            border-radius: 10px;
-            margin-top: 2rem;
-        }
-
-        footer {
-            background-color: var(--primary-green);
-            color: white;
-            text-align: center;
-            padding: 1rem;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .prayer-times {
-                grid-template-columns: 1fr;
-            }
-        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <header>
-        <h1>Masjid al Salam</h1>
-        <p>Sevelen, Schweiz</p>
+      <h1>Masjid al Salam</h1>
+      <p>Sevelen, Schweiz</p>
     </header>
 
     <div class="container">
-        <div class="card">
-            <h2>Heutige Gebetszeiten</h2>
-            <div class="prayer-times" id="prayerTimes">
-                <!-- Dynamic content will be loaded here -->
-                <div class="prayer-time-item">
-                    <span>Fajr:</span>
-                    <span id="fajr">-:-</span>
-                </div>
-                <div class="prayer-time-item">
-                    <span>Dhuhr:</span>
-                    <span id="dhuhr">-:-</span>
-                </div>
-                <div class="prayer-time-item">
-                    <span>Asr:</span>
-                    <span id="asr">-:-</span>
-                </div>
-                <div class="prayer-time-item">
-                    <span>Maghrib:</span>
-                    <span id="maghrib">-:-</span>
-                </div>
-                <div class="prayer-time-item">
-                    <span>Isha:</span>
-                    <span id="isha">-:-</span>
-                </div>
-            </div>
+      <div class="card">
+        <h2>Heutige Gebetszeiten</h2>
+        <div class="prayer-times" id="prayerTimes">
+          <!-- Dynamic content will be loaded here -->
+          <div class="prayer-time-item">
+            <span>Fajr:</span>
+            <span id="fajr">-:-</span>
+          </div>
+          <div class="prayer-time-item">
+            <span>Dhuhr:</span>
+            <span id="dhuhr">-:-</span>
+          </div>
+          <div class="prayer-time-item">
+            <span>Asr:</span>
+            <span id="asr">-:-</span>
+          </div>
+          <div class="prayer-time-item">
+            <span>Maghrib:</span>
+            <span id="maghrib">-:-</span>
+          </div>
+          <div class="prayer-time-item">
+            <span>Isha:</span>
+            <span id="isha">-:-</span>
+          </div>
         </div>
+      </div>
 
-        <div class="card" style="margin-top: 2rem;">
-            <h2>Wochenplan</h2>
-            <div class="schedule">
-                <p>📅 Freitagsgebet: 13:30</p>
-                <p>📚 Dars: Zwischen Maghrib und Isha (außer Sonntags)</p>
-                <p>📖 Quran Unterricht: Sonntags zwischen Maghrib und Isha</p>
-            </div>
+      <div class="card" style="margin-top: 2rem">
+        <h2>Wochenplan</h2>
+        <div class="schedule">
+          <p>📅 Freitagsgebet: 13:30</p>
+          <p>📚 Dars: Zwischen Maghrib und Isha (außer Sonntags)</p>
+          <p>📖 Quran Unterricht: Sonntags zwischen Maghrib und Isha</p>
         </div>
+      </div>
     </div>
 
     <footer>
-        <p>Bahnweg N 31, 9475 Sevelen, Switzerland</p>
-        <p>Contact: info@masjidalsalam.ch | Tel: +41 00 00 00 00 00</p>
-        <!-- <p>© 2023 Masjid al Salam - Sevelen</p> -->
+      <p>Bahnweg N 31, 9475 Sevelen, Switzerland</p>
+      <p>Contact: info@masjidalsalam.ch | Tel: +41 00 00 00 00 00</p>
+      <!-- <p>© 2023 Masjid al Salam - Sevelen</p> -->
     </footer>
 
     <script>
-        async function fetchPrayerTimes() {
-            const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/';
-            const TARGET_URL = 'https://www.izrs.ch/gebetszeiten.html';
-            
-            try {
-                const response = await fetch(CORS_PROXY + TARGET_URL);
-                const html = await response.text();
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(html, 'text/html');
+      async function fetchPrayerTimes() {
+        const CORS_PROXY = "https://cors-anywhere.herokuapp.com/";
+        const TARGET_URL = "https://www.izrs.ch/gebetszeiten.html";
 
-                // Find the prayer times table - you'll need to verify the exact structure
-                const table = doc.querySelector('table'); // Adjust selector as needed
-                const rows = Array.from(table.querySelectorAll('tr'));
+        try {
+          const response = await fetch(CORS_PROXY + TARGET_URL);
+          const html = await response.text();
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(html, "text/html");
 
-                // Find Chur in the table (this needs precise adjustment)
-                let churTimes = {};
-                rows.forEach(row => {
-                    const cells = row.querySelectorAll('td');
-                    if (cells.length > 0 && cells[0].textContent.includes('Chur')) {
-                        churTimes = {
-                            fajr: cells[1].textContent.trim(),
-                            dhuhr: cells[2].textContent.trim(),
-                            asr: cells[3].textContent.trim(),
-                            maghrib: cells[4].textContent.trim(),
-                            isha: cells[5].textContent.trim()
-                        };
-                    }
-                });
+          // Find the prayer times table - you'll need to verify the exact structure
+          const table = doc.querySelector("table"); // Adjust selector as needed
+          const rows = Array.from(table.querySelectorAll("tr"));
 
-                if (Object.keys(churTimes).length > 0) {
-                    document.getElementById('fajr').textContent = churTimes.fajr;
-                    document.getElementById('dhuhr').textContent = churTimes.dhuhr;
-                    document.getElementById('asr').textContent = churTimes.asr;
-                    document.getElementById('maghrib').textContent = churTimes.maghrib;
-                    document.getElementById('isha').textContent = churTimes.isha;
-                } else {
-                    throw new Error('Chur prayer times not found');
-                }
-            } catch (error) {
-                console.error('Error fetching prayer times:', error);
-                // Fallback to static times
-                document.getElementById('prayerTimes').innerHTML = `
+          // Find Chur in the table (this needs precise adjustment)
+          let churTimes = {};
+          rows.forEach((row) => {
+            const cells = row.querySelectorAll("td");
+            if (cells.length > 0 && cells[0].textContent.includes("Chur")) {
+              churTimes = {
+                fajr: cells[1].textContent.trim(),
+                dhuhr: cells[2].textContent.trim(),
+                asr: cells[3].textContent.trim(),
+                maghrib: cells[4].textContent.trim(),
+                isha: cells[5].textContent.trim(),
+              };
+            }
+          });
+
+          if (Object.keys(churTimes).length > 0) {
+            document.getElementById("fajr").textContent = churTimes.fajr;
+            document.getElementById("dhuhr").textContent = churTimes.dhuhr;
+            document.getElementById("asr").textContent = churTimes.asr;
+            document.getElementById("maghrib").textContent = churTimes.maghrib;
+            document.getElementById("isha").textContent = churTimes.isha;
+          } else {
+            throw new Error("Chur prayer times not found");
+          }
+        } catch (error) {
+          console.error("Error fetching prayer times:", error);
+          // Fallback to static times
+          document.getElementById("prayerTimes").innerHTML = `
                     <p>⚠️ Live-Zeiten nicht verfügbar. Geschätzte Zeiten für heute (Dummy Werte bitte nicht ernst nehmen):</p>
                     <div class="prayer-time-item"><span>Fajr:</span> 05:00</div>
                     <div class="prayer-time-item"><span>Dhuhr:</span> 13:30</div>
@@ -188,13 +188,12 @@
                     <div class="prayer-time-item"><span>Maghrib:</span> 20:45</div>
                     <div class="prayer-time-item"><span>Isha:</span> 22:00</div>
                 `;
-            }
         }
+      }
 
-        // Update times on load and every hour
-        fetchPrayerTimes();
-        setInterval(fetchPrayerTimes, 3600000); // Refresh every hour
+      // Update times on load and every hour
+      fetchPrayerTimes();
+      setInterval(fetchPrayerTimes, 3600000); // Refresh every hour
     </script>
-
-</body>
+  </body>
 </html>
