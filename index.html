@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Masjid as Salam - Sevelen</title>
+    <title>Masjid al Salam - Sevelen</title>
     <style>
         :root {
             --primary-green: #2E7D32;
@@ -90,7 +90,7 @@
 </head>
 <body>
     <header>
-        <h1>Masjid as Salam</h1>
+        <h1>Masjid al Salam</h1>
         <p>Sevelen, Schweiz</p>
     </header>
 
@@ -133,38 +133,68 @@
     </div>
 
     <footer>
-        <p>Contact: info@masjidasalam.ch | Tel: +41 81 123 45 67</p>
-        <p>© 2023 Masjid as Salam - Sevelen</p>
+        <p>Bahnweg N 31, 9475 Sevelen, Switzerland</p>
+        <p>Contact: info@masjidalsalam.ch | Tel: +41 00 00 00 00 00</p>
+        <!-- <p>© 2023 Masjid al Salam - Sevelen</p> -->
     </footer>
 
     <script>
-        // IMPORTANT: You need to replace this with actual API integration from izrs.ch
-        // This is just a simulation
-        function updatePrayerTimes() {
-            // Simulated API response (replace with real API call)
-            const prayerTimes = {
-                fajr: "05:00",
-                dhuhr: "13:30",
-                asr: "17:15",
-                maghrib: "20:45",
-                isha: "22:00"
-            };
+        async function fetchPrayerTimes() {
+            const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/';
+            const TARGET_URL = 'https://www.izrs.ch/gebetszeiten.html';
+            
+            try {
+                const response = await fetch(CORS_PROXY + TARGET_URL);
+                const html = await response.text();
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
 
-            document.getElementById('fajr').textContent = prayerTimes.fajr;
-            document.getElementById('dhuhr').textContent = prayerTimes.dhuhr;
-            document.getElementById('asr').textContent = prayerTimes.asr;
-            document.getElementById('maghrib').textContent = prayerTimes.maghrib;
-            document.getElementById('isha').textContent = prayerTimes.isha;
+                // Find the prayer times table - you'll need to verify the exact structure
+                const table = doc.querySelector('table'); // Adjust selector as needed
+                const rows = Array.from(table.querySelectorAll('tr'));
+
+                // Find Chur in the table (this needs precise adjustment)
+                let churTimes = {};
+                rows.forEach(row => {
+                    const cells = row.querySelectorAll('td');
+                    if (cells.length > 0 && cells[0].textContent.includes('Chur')) {
+                        churTimes = {
+                            fajr: cells[1].textContent.trim(),
+                            dhuhr: cells[2].textContent.trim(),
+                            asr: cells[3].textContent.trim(),
+                            maghrib: cells[4].textContent.trim(),
+                            isha: cells[5].textContent.trim()
+                        };
+                    }
+                });
+
+                if (Object.keys(churTimes).length > 0) {
+                    document.getElementById('fajr').textContent = churTimes.fajr;
+                    document.getElementById('dhuhr').textContent = churTimes.dhuhr;
+                    document.getElementById('asr').textContent = churTimes.asr;
+                    document.getElementById('maghrib').textContent = churTimes.maghrib;
+                    document.getElementById('isha').textContent = churTimes.isha;
+                } else {
+                    throw new Error('Chur prayer times not found');
+                }
+            } catch (error) {
+                console.error('Error fetching prayer times:', error);
+                // Fallback to static times
+                document.getElementById('prayerTimes').innerHTML = `
+                    <p>⚠️ Live-Zeiten nicht verfügbar. Geschätzte Zeiten für heute (Dummy Werte bitte nicht ernst nehmen):</p>
+                    <div class="prayer-time-item"><span>Fajr:</span> 05:00</div>
+                    <div class="prayer-time-item"><span>Dhuhr:</span> 13:30</div>
+                    <div class="prayer-time-item"><span>Asr:</span> 17:15</div>
+                    <div class="prayer-time-item"><span>Maghrib:</span> 20:45</div>
+                    <div class="prayer-time-item"><span>Isha:</span> 22:00</div>
+                `;
+            }
         }
 
-        // Update times on load and every minute
-        updatePrayerTimes();
-        setInterval(updatePrayerTimes, 60000);
-
-        // To integrate with izrs.ch API:
-        // 1. Register for their API access
-        // 2. Replace the simulated prayerTimes object with actual API fetch
-        // 3. Handle CORS if necessary using a proxy server
+        // Update times on load and every hour
+        fetchPrayerTimes();
+        setInterval(fetchPrayerTimes, 3600000); // Refresh every hour
     </script>
+
 </body>
 </html>
