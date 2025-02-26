@@ -52,17 +52,44 @@
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
       }
 
-      .container {
+      /* Layout container for sidebar + main content */
+      .layout {
+        display: grid;
+        grid-template-columns: 250px 1fr;
+        gap: 20px;
         max-width: 1200px;
         margin: 2rem auto;
         padding: 0 20px;
       }
 
-      .prayer-times {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 2rem;
-        margin-bottom: 3rem;
+      /* Sidebar styles */
+      .sidebar {
+        background-color: var(--light-green);
+        padding: 1rem;
+        border-radius: 10px;
+      }
+
+      .sidebar h3 {
+        margin-bottom: 1rem;
+        color: var(--secondary-green);
+      }
+
+      .sidebar ul {
+        list-style: none;
+      }
+
+      .sidebar li {
+        margin-bottom: 0.5rem;
+      }
+
+      .sidebar a {
+        text-decoration: none;
+        color: var(--primary-green);
+      }
+
+      /* Main content remains the same */
+      .main-content {
+        /* optional styling */
       }
 
       .card {
@@ -70,6 +97,7 @@
         padding: 1.5rem;
         border-radius: 10px;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        margin-bottom: 2rem;
       }
 
       .card h2 {
@@ -79,17 +107,17 @@
         padding-bottom: 0.5rem;
       }
 
+      .prayer-times {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin-bottom: 3rem;
+      }
+
       .prayer-time-item {
         display: flex;
         justify-content: space-between;
         margin-bottom: 0.5rem;
-      }
-
-      .calendar {
-        background-color: var(--light-green);
-        padding: 2rem;
-        border-radius: 10px;
-        margin-top: 2rem;
       }
 
       footer {
@@ -104,8 +132,11 @@
 
       /* Responsive Design */
       @media (max-width: 768px) {
-        .prayer-times {
+        .layout {
           grid-template-columns: 1fr;
+        }
+        footer {
+          position: static;
         }
       }
     </style>
@@ -116,33 +147,67 @@
       <p>Sevelen, Schweiz</p>
     </header>
 
-    <div class="container">
-      <div class="card">
-        <h2>Heutige Gebetszeiten</h2>
-        <div class="prayer-times" id="prayerTimes">
-          <!-- Dynamic content will be loaded here -->
-          <div class="prayer-time-item">
-            <span>Fajr:</span>
-            <span id="fajr">-:-</span>
+
+    <div class="layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+          <h3>Navigation</h3>
+          <ul>
+            <li><a href="#">Startseite</a></li>
+            <li><a href="#prayerTimes">Gebetszeiten</a></li>
+            <li><a href="#">Wochenplan</a></li>
+            <li><a href="#">Über uns</a></li>
+            <li><a href="#">Kontakt</a></li>
+            <li>
+                Vertraute Islam Quellen:
+                
+                <!-- Islam Q&A -->
+                <ul>
+                  <li><a href="https://islamqa.info/ge">Islam Q & A (deutsch)</a></li>
+                </ul>
+                <ul>
+                  <li><a href="https://islamqa.info/en">Islam Q & A (englisch)</a></li>
+                </ul>
+                <ul>
+                  <li><a href="https://islamqa.info/ar">Islam Q & A (arabisch)</a></li>
+                </ul>
+
+                <!-- BinBaz -->
+                <ul>
+                    <li><a href="https://binbaz.org.sa/">Bin Baz Fatwas (arabisch)</a></li>
+                </ul>
+            </li>
+            </ul>
+        </aside>
+  
+        <!-- Main content -->
+        <main class="main-content">
+          <div class="card">
+            <h2>Heutige Gebetszeiten</h2>
+            <div class="prayer-times" id="prayerTimes">
+              <!-- Dynamic content will be loaded here -->
+              <div class="prayer-time-item">
+                <span>Fajr:</span>
+                <span id="fajr">-:-</span>
+              </div>
+              <div class="prayer-time-item">
+                <span>Dhuhr:</span>
+                <span id="dhuhr">-:-</span>
+              </div>
+              <div class="prayer-time-item">
+                <span>Asr:</span>
+                <span id="asr">-:-</span>
+              </div>
+              <div class="prayer-time-item">
+                <span>Maghrib:</span>
+                <span id="maghrib">-:-</span>
+              </div>
+              <div class="prayer-time-item">
+                <span>Isha:</span>
+                <span id="isha">-:-</span>
+              </div>
+            </div>
           </div>
-          <div class="prayer-time-item">
-            <span>Dhuhr:</span>
-            <span id="dhuhr">-:-</span>
-          </div>
-          <div class="prayer-time-item">
-            <span>Asr:</span>
-            <span id="asr">-:-</span>
-          </div>
-          <div class="prayer-time-item">
-            <span>Maghrib:</span>
-            <span id="maghrib">-:-</span>
-          </div>
-          <div class="prayer-time-item">
-            <span>Isha:</span>
-            <span id="isha">-:-</span>
-          </div>
-        </div>
-      </div>
 
       <div class="card" style="margin-top: 2rem">
         <h2>Wochenplan</h2>
