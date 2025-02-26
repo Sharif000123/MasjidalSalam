@@ -290,9 +290,10 @@
         <div class="card" style="margin-top: 2rem">
           <h2>Wochenplan</h2>
           <div class="schedule">
-            <p>📅 Freitagsgebet: 13:30</p>
+            <p>🕌 Gemeinschaftsgebet: Immer 15 minuten nach Athan</p>
+            <p>📅 Freitagsgebet: 5 minuten nach dem Eintreffen von Dhuhr</p>
             <p>📚 Dars: Zwischen Maghrib und Isha (außer Sonntags)</p>
-            <p>📖 Quran Unterricht: Sonntags zwischen Maghrib und Isha</p>
+            <p>📖 Quran Unterricht: Sonntags 10:30</p>
           </div>
         </div>
         <div class="card">
@@ -413,7 +414,7 @@
       // Fetch prayer times on page load and refresh every hour
       fetchPrayerTimes();
       setInterval(fetchPrayerTimes, 3600000);
-      
+
       async function fetchKnowledge() {
         try {
           const response = await fetch("Wissen.txt");
