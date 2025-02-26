@@ -19,13 +19,6 @@
     <meta property="og:url" content="https://www.masjidalsalam.ch" />
     <meta property="og:type" content="website" />
 
-    <!-- Optional: Twitter Card meta tags -->
-    <!-- <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Masjid al Salam - Sevelen" />
-  <meta name="twitter:description" content="Besuche unsere Seite für aktuelle Gebetszeiten und Informationen." />
-  <meta name="twitter:image" content="https://www.swizzonic.ch/Images/websiteIconSmall.png" />
- -->
-
     <style>
       :root {
         --primary-green: #2e7d32;
@@ -50,6 +43,21 @@
         text-align: center;
         padding: 2rem;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        position: relative;
+      }
+
+      /* Hamburger menu button */
+      .menu-toggle {
+        display: none;
+        position: absolute;
+        top: 1rem;
+        left: 1rem;
+        background: transparent; /* Transparent background */
+        border: none;
+        color: white;
+        font-size: 24px;
+        cursor: pointer;
+        z-index: 1100;
       }
 
       /* Layout container for sidebar + main content */
@@ -67,6 +75,7 @@
         background-color: var(--light-green);
         padding: 1rem;
         border-radius: 10px;
+        position: relative;
       }
 
       .sidebar h3 {
@@ -87,9 +96,20 @@
         color: var(--primary-green);
       }
 
-      /* Main content remains the same */
+      /* Close button inside the sidebar */
+      .close-sidebar {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        background: transparent;
+        border: none;
+        color: var(--primary-green);
+        font-size: 24px;
+        cursor: pointer;
+      }
+
+      /* Main content styles */
       .main-content {
-        /* optional styling */
       }
 
       .card {
@@ -129,103 +149,159 @@
         bottom: 0;
         width: 100%;
       }
+      #date {
+        display: inline; /* or use inline-block for more flexibility */
+      }
 
-      /* Responsive Design */
+      /* Mobile Styles */
       @media (max-width: 768px) {
+        .menu-toggle {
+          display: block;
+        }
         .layout {
           grid-template-columns: 1fr;
+          position: relative;
+        }
+        /* Hide sidebar off-canvas by default */
+        .sidebar {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 250px;
+          height: 100%;
+          transform: translateX(-100%);
+          transition: transform 0.3s ease;
+          z-index: 1000;
+        }
+        /* Sidebar open state */
+        .sidebar.open {
+          transform: translateX(0);
+        }
+        /* Dim overlay when sidebar is open */
+        .overlay {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(0, 0, 0, 0.5);
+          z-index: 900;
+          display: none;
+        }
+        .overlay.visible {
+          display: block;
         }
         footer {
           position: static;
+        }
+      }
+      @media (min-width: 769px) {
+        .menu-toggle,
+        .close-sidebar {
+          display: none;
         }
       }
     </style>
   </head>
   <body>
     <header>
+      <button class="menu-toggle" id="menuToggle">☰</button>
       <h1>Masjid al Salam</h1>
       <p>Sevelen, Schweiz</p>
     </header>
 
-
     <div class="layout">
-        <!-- Sidebar -->
-        <aside class="sidebar">
-          <h3>Navigation</h3>
-          <ul>
-            <li><a href="#">Startseite</a></li>
-            <li><a href="#prayerTimes">Gebetszeiten</a></li>
-            <li><a href="#">Wochenplan</a></li>
-            <li><a href="#">Über uns</a></li>
-            <li><a href="#">Kontakt</a></li>
-            <li>
-                Vertraute Islam Quellen:
-                
-                <!-- Islam Q&A -->
-                <ul>
-                  <li><a href="https://islamqa.info/ge">Islam Q & A (deutsch)</a></li>
-                </ul>
-                <ul>
-                  <li><a href="https://islamqa.info/en">Islam Q & A (englisch)</a></li>
-                </ul>
-                <ul>
-                  <li><a href="https://islamqa.info/ar">Islam Q & A (arabisch)</a></li>
-                </ul>
+      <!-- Sidebar -->
+      <aside class="sidebar" id="sidebar">
+        <br /><br />
+        <button class="close-sidebar" id="closeSidebar">✕</button>
 
-                <!-- BinBaz -->
-                <ul>
-                    <li><a href="https://binbaz.org.sa/">Bin Baz Fatwas (arabisch)</a></li>
-                </ul>
-            </li>
+        <h3>Navigation</h3>
+        <ul>
+          <li><a href="#">Startseite</a></li>
+          <li><a href="#prayerTimes">Gebetszeiten</a></li>
+          <li><a href="#">Wochenplan</a></li>
+          <li><a href="#">Über uns</a></li>
+          <li><a href="#">Kontakt</a></li>
+          <li>
+            Vertraute Islam Quellen:
+            <ul>
+              <li>
+                <a href="https://islamqa.info/ge">Islam Q &amp; A (deutsch)</a>
+              </li>
+              <li>
+                <a href="https://islamqa.info/en">Islam Q &amp; A (englisch)</a>
+              </li>
+              <li>
+                <a href="https://islamqa.info/ar">Islam Q &amp; A (arabisch)</a>
+              </li>
             </ul>
-        </aside>
-  
-        <!-- Main content -->
-        <main class="main-content">
-          <div class="card">
-            <h2>Heutige Gebetszeiten</h2>
-            <div class="prayer-times" id="prayerTimes">
-              <!-- Dynamic content will be loaded here -->
-              <div class="prayer-time-item">
-                <span>Fajr:</span>
-                <span id="fajr">-:-</span>
-              </div>
-              <div class="prayer-time-item">
-                <span>Dhuhr:</span>
-                <span id="dhuhr">-:-</span>
-              </div>
-              <div class="prayer-time-item">
-                <span>Asr:</span>
-                <span id="asr">-:-</span>
-              </div>
-              <div class="prayer-time-item">
-                <span>Maghrib:</span>
-                <span id="maghrib">-:-</span>
-              </div>
-              <div class="prayer-time-item">
-                <span>Isha:</span>
-                <span id="isha">-:-</span>
-              </div>
+            <ul>
+              <li>
+                <a href="https://binbaz.org.sa/">Bin Baz Fatwas (arabisch)</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </aside>
+
+      <!-- Main content -->
+      <main class="main-content">
+        <div class="card">
+          <h2>
+            Heutige Gebetszeiten:
+            <div id="date"></div>
+          </h2>
+          <div class="prayer-times" id="prayerTimes">
+            <!-- Dynamic content will be loaded here -->
+            <div class="prayer-time-item">
+              <span>Fajr:</span>
+              <span id="fajr">-:-</span>
+            </div>
+            <div class="prayer-time-item">
+              <span>Dhuhr:</span>
+              <span id="dhuhr">-:-</span>
+            </div>
+            <div class="prayer-time-item">
+              <span>Asr:</span>
+              <span id="asr">-:-</span>
+            </div>
+            <div class="prayer-time-item">
+              <span>Maghrib:</span>
+              <span id="maghrib">-:-</span>
+            </div>
+            <div class="prayer-time-item">
+              <span>Isha:</span>
+              <span id="isha">-:-</span>
             </div>
           </div>
-
-      <div class="card" style="margin-top: 2rem">
-        <h2>Wochenplan</h2>
-        <div class="schedule">
-          <p>📅 Freitagsgebet: 13:30</p>
-          <p>📚 Dars: Zwischen Maghrib und Isha (außer Sonntags)</p>
-          <p>📖 Quran Unterricht: Sonntags zwischen Maghrib und Isha</p>
         </div>
-      </div>
+
+        <div class="card" style="margin-top: 2rem">
+          <h2>Wochenplan</h2>
+          <div class="schedule">
+            <p>📅 Freitagsgebet: 13:30</p>
+            <p>📚 Dars: Zwischen Maghrib und Isha (außer Sonntags)</p>
+            <p>📖 Quran Unterricht: Sonntags zwischen Maghrib und Isha</p>
+          </div>
+        </div>
+      </main>
     </div>
+
+    <!-- Optional overlay for mobile when sidebar is open -->
+    <div class="overlay" id="overlay"></div>
 
     <footer>
       <p>Bahnweg N 31, 9475 Sevelen, Switzerland</p>
-      <p>Contact: info@masjidalsalam.ch | Tel: +41 77 495 74 63</p>
-      <!-- <p>© 2023 Masjid al Salam - Sevelen</p> -->
+      <p>Kontakt: masjidalsalam.info@gmail.com | Tel.: +41 77 495 74 63</p>
     </footer>
 
     <script>
+      n = new Date();
+      y = n.getFullYear() % 100;
+      m = n.getMonth() + 1;
+      d = n.getDate();
+      document.getElementById("date").innerHTML = d + "." + m + "." + y;
       // Helper function to adjust time by offset (in minutes)
       function adjustTime(timeStr, offsetMinutes) {
         const [hours, minutes] = timeStr.split(":").map(Number);
@@ -249,9 +325,9 @@
         // Define individual offsets in minutes for each prayer time
         const offsets = {
           Fajr: -4, // Subtract 4 minutes
-          Dhuhr: 1, // Add 1 minutes
-          Asr: 2, // Add 2 mins
-          Maghrib: 1, // Add 1 min
+          Dhuhr: 1, // Add 1 minute
+          Asr: 2, // Add 2 minutes
+          Maghrib: 1, // Add 1 minute
           Isha: 9, // Add 9 minutes
         };
 
@@ -290,7 +366,7 @@
           console.error("Error fetching prayer times:", error);
           // Fallback to static times (dummy values)
           document.getElementById("prayerTimes").innerHTML = `
-                    <p>⚠️ Live-Zeiten nicht verfügbar.</p>
+                    <p⚠️ Live-Zeiten nicht verfügbar.</p>
                     <div class="prayer-time-item"><span>Fajr:</span> --:--</div>
                     <div class="prayer-time-item"><span>Dhuhr:</span> --:--</div>
                     <div class="prayer-time-item"><span>Asr:</span> --:--</div>
@@ -299,6 +375,26 @@
                   `;
         }
       }
+
+      // Mobile sidebar toggle
+      const menuToggle = document.getElementById("menuToggle");
+      const sidebar = document.getElementById("sidebar");
+      const closeSidebar = document.getElementById("closeSidebar");
+      const overlay = document.getElementById("overlay");
+
+      menuToggle.addEventListener("click", () => {
+        sidebar.classList.toggle("open");
+        overlay.classList.toggle("visible");
+      });
+      closeSidebar.addEventListener("click", () => {
+        sidebar.classList.remove("open");
+        overlay.classList.remove("visible");
+        menuToggle.style.display = "block"; // Show hamburger again
+      });
+      overlay.addEventListener("click", () => {
+        sidebar.classList.remove("open");
+        overlay.classList.remove("visible");
+      });
 
       // Fetch prayer times on page load and refresh every hour
       fetchPrayerTimes();
