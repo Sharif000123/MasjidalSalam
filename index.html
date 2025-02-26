@@ -411,9 +411,12 @@
       });
 
       // Fetch prayer times on page load and refresh every hour
+      fetchPrayerTimes();
+      setInterval(fetchPrayerTimes, 3600000);
+      
       async function fetchKnowledge() {
         try {
-          const response = await fetch("Wisssen.txt");
+          const response = await fetch("Wissen.txt");
 
           if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
