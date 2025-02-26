@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Masjid al Salam - Sevelen</title>
+    <link rel = "icon" type="image/png" href="Images/websiteIcon.png">
     <style>
       :root {
         --primary-green: #2e7d32;
@@ -139,61 +140,83 @@
     </footer>
 
     <script>
+      // Helper function to adjust time by offset (in minutes)
+      function adjustTime(timeStr, offsetMinutes) {
+        const [hours, minutes] = timeStr.split(":").map(Number);
+        let totalMinutes = hours * 60 + minutes + offsetMinutes;
+        // Normalize in case the adjustment goes past midnight
+        totalMinutes = ((totalMinutes % 1440) + 1440) % 1440;
+        const newHours = Math.floor(totalMinutes / 60)
+          .toString()
+          .padStart(2, "0");
+        const newMinutes = (totalMinutes % 60).toString().padStart(2, "0");
+        return `${newHours}:${newMinutes}`;
+      }
+
       async function fetchPrayerTimes() {
-        const CORS_PROXY = "https://cors-anywhere.herokuapp.com/";
-        const TARGET_URL = "https://www.izrs.ch/gebetszeiten.html";
+        // Define your city, country, and method (calculation method 12)
+        const city = "Chur";
+        const country = "Switzerland";
+        const method = 12;
+        const apiUrl = `https://api.aladhan.com/v1/timingsByCity?city=${city}&country=${country}&method=${method}`;
+
+        // Define individual offsets in minutes for each prayer time
+        const offsets = {
+          Fajr: -4, // Subtract 4 minutes
+          Dhuhr: 1, // Add 1 minutes
+          Asr: 2, // Add 2 mins
+          Maghrib: 1, // Add 1 min
+          Isha: 9, // Add 9 minutes
+        };
 
         try {
-          const response = await fetch(CORS_PROXY + TARGET_URL);
-          const html = await response.text();
-          const parser = new DOMParser();
-          const doc = parser.parseFromString(html, "text/html");
+          const response = await fetch(apiUrl);
+          const data = await response.json();
 
-          // Find the prayer times table - you'll need to verify the exact structure
-          const table = doc.querySelector("table"); // Adjust selector as needed
-          const rows = Array.from(table.querySelectorAll("tr"));
-
-          // Find Chur in the table (this needs precise adjustment)
-          let churTimes = {};
-          rows.forEach((row) => {
-            const cells = row.querySelectorAll("td");
-            if (cells.length > 0 && cells[0].textContent.includes("Chur")) {
-              churTimes = {
-                fajr: cells[1].textContent.trim(),
-                dhuhr: cells[2].textContent.trim(),
-                asr: cells[3].textContent.trim(),
-                maghrib: cells[4].textContent.trim(),
-                isha: cells[5].textContent.trim(),
-              };
-            }
-          });
-
-          if (Object.keys(churTimes).length > 0) {
-            document.getElementById("fajr").textContent = churTimes.fajr;
-            document.getElementById("dhuhr").textContent = churTimes.dhuhr;
-            document.getElementById("asr").textContent = churTimes.asr;
-            document.getElementById("maghrib").textContent = churTimes.maghrib;
-            document.getElementById("isha").textContent = churTimes.isha;
+          // Check if data is valid
+          if (data && data.data && data.data.timings) {
+            const timings = data.data.timings;
+            // Apply individual offsets to each prayer time
+            document.getElementById("fajr").textContent = adjustTime(
+              timings.Fajr,
+              offsets.Fajr
+            );
+            document.getElementById("dhuhr").textContent = adjustTime(
+              timings.Dhuhr,
+              offsets.Dhuhr
+            );
+            document.getElementById("asr").textContent = adjustTime(
+              timings.Asr,
+              offsets.Asr
+            );
+            document.getElementById("maghrib").textContent = adjustTime(
+              timings.Maghrib,
+              offsets.Maghrib
+            );
+            document.getElementById("isha").textContent = adjustTime(
+              timings.Isha,
+              offsets.Isha
+            );
           } else {
-            throw new Error("Chur prayer times not found");
+            throw new Error("Prayer times data not available");
           }
         } catch (error) {
           console.error("Error fetching prayer times:", error);
-          // Fallback to static times
+          // Fallback to static times (dummy values)
           document.getElementById("prayerTimes").innerHTML = `
-                    <p>⚠️ Live-Zeiten nicht verfügbar. Geschätzte Zeiten für heute (Dummy Werte bitte nicht ernst nehmen):</p>
-                    <div class="prayer-time-item"><span>Fajr:</span> 05:00</div>
-                    <div class="prayer-time-item"><span>Dhuhr:</span> 13:30</div>
-                    <div class="prayer-time-item"><span>Asr:</span> 17:15</div>
-                    <div class="prayer-time-item"><span>Maghrib:</span> 20:45</div>
-                    <div class="prayer-time-item"><span>Isha:</span> 22:00</div>
-                `;
+                    <p>⚠️ Live-Zeiten nicht verfügbar.</p>
+                    <div class="prayer-time-item"><span>Fajr:</span> --:--</div>
+                    <div class="prayer-time-item"><span>Dhuhr:</span> --:--</div>
+                    <div class="prayer-time-item"><span>Asr:</span> --:--</div>
+                    <div class="prayer-time-item"><span>Maghrib:</span> --:--</div>
+                    <div class="prayer-time-item"><span>Isha:</span> --:--</div>
+                  `;
         }
       }
 
-      // Update times on load and every hour
+      // Fetch prayer times on page load and refresh every hour
       fetchPrayerTimes();
-      setInterval(fetchPrayerTimes, 3600000); // Refresh every hour
+      setInterval(fetchPrayerTimes, 3600000);
     </script>
   </body>
 </html>
