@@ -6,11 +6,16 @@
     <title>Masjid al Salam - Sevelen</title>
     <link rel="icon" type="image/ico" href="Images/websiteIcon.ico" />
 
-    <meta name="description" content="Website der Masjid al Salam in Sevelen, Schweiz. Hier sind die aktuellen Gebetszeiten und Informationen über die Moschee zu finden." />
-    <meta name="keywords" content="Masjid al Salam, Sevelen, Moschee, Gebetszeiten, Islam, Schweiz" />  
+    <meta
+      name="description"
+      content="Website der Masjid al Salam in Sevelen, Schweiz. Hier sind die aktuellen Gebetszeiten und Informationen über die Moschee zu finden."
+    />
+    <meta
+      name="keywords"
+      content="Masjid al Salam, Sevelen, Moschee, Gebetszeiten, Islam, Schweiz"
+    />
     <meta name="author" content="Masjid al Salam" />
-    <meta name="robots" content="index" /> 
-    
+    <meta name="robots" content="index" />
 
     <!-- Open Graph meta tags for social sharing -->
     <meta property="og:title" content="Masjid al Salam - Sevelen" />
@@ -290,6 +295,10 @@
             <p>📖 Quran Unterricht: Sonntags zwischen Maghrib und Isha</p>
           </div>
         </div>
+        <div class="card">
+          <h2>Eine kleine Lektion:</h2>
+          <p id="randomKnowledge">Lade Wissen...</p>
+        </div>
       </main>
     </div>
 
@@ -404,6 +413,29 @@
       // Fetch prayer times on page load and refresh every hour
       fetchPrayerTimes();
       setInterval(fetchPrayerTimes, 3600000);
+      async function fetchKnowledge() {
+    try {
+        const response = await fetch("Wisssen.txt");
+        const text = await response.text();
+        console.log("Fetched Text:", text); // Debugging log
+        
+        const snippets = text.split("---").map(s => s.trim()).filter(s => s.length > 0);
+        console.log("Extracted Snippets:", snippets); // Debugging log
+        
+        if (snippets.length > 0) {
+            const randomIndex = Math.floor(Math.random() * snippets.length);
+            document.getElementById("randomKnowledge").textContent = snippets[randomIndex];
+        } else {
+            document.getElementById("randomKnowledge").textContent = "Keine Wissens-Snippets gefunden.";
+        }
+    } catch (error) {
+        console.error("Error fetching knowledge:", error);
+        document.getElementById("randomKnowledge").textContent = "Fehler beim Laden des Wissens.";
+    }
+}
+
+fetchKnowledge();
+
     </script>
   </body>
 </html>
