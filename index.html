@@ -410,10 +410,6 @@
         overlay.classList.remove("visible");
       });
 
-      // Fetch prayer times on page load and refresh every hour
-      fetchPrayerTimes();
-      setInterval(fetchPrayerTimes, 3600000);
-
       async function fetchKnowledge() {
         try {
           const response = await fetch("Wisssen.txt");
@@ -448,6 +444,10 @@
       }
 
       fetchKnowledge();
+      
+      // Fetch prayer times on page load and refresh every hour
+      fetchPrayerTimes();
+      setInterval(fetchPrayerTimes, 3600000);
     </script>
   </body>
 </html>
