@@ -414,28 +414,33 @@
       fetchPrayerTimes();
       setInterval(fetchPrayerTimes, 3600000);
       async function fetchKnowledge() {
-    try {
-        const response = await fetch("Wisssen.txt");
-        const text = await response.text();
-        console.log("Fetched Text:", text); // Debugging log
-        
-        const snippets = text.split("---").map(s => s.trim()).filter(s => s.length > 0);
-        console.log("Extracted Snippets:", snippets); // Debugging log
-        
-        if (snippets.length > 0) {
+        try {
+          const response = await fetch("Wissen.txt");
+          const text = await response.text();
+          console.log("Fetched Text:", text); // Debugging log
+
+          const snippets = text
+            .split("---")
+            .map((s) => s.trim())
+            .filter((s) => s.length > 0);
+          console.log("Extracted Snippets:", snippets); // Debugging log
+
+          if (snippets.length > 0) {
             const randomIndex = Math.floor(Math.random() * snippets.length);
-            document.getElementById("randomKnowledge").textContent = snippets[randomIndex];
-        } else {
-            document.getElementById("randomKnowledge").textContent = "Keine Wissens-Snippets gefunden.";
+            document.getElementById("randomKnowledge").textContent =
+              snippets[randomIndex];
+          } else {
+            document.getElementById("randomKnowledge").textContent =
+              "Keine Wissens-Snippets gefunden.";
+          }
+        } catch (error) {
+          console.error("Error fetching knowledge:", error);
+          document.getElementById("randomKnowledge").textContent =
+            "Fehler beim Laden des Wissens.";
         }
-    } catch (error) {
-        console.error("Error fetching knowledge:", error);
-        document.getElementById("randomKnowledge").textContent = "Fehler beim Laden des Wissens.";
-    }
-}
+      }
 
-fetchKnowledge();
-
+      fetchKnowledge();
     </script>
   </body>
 </html>
