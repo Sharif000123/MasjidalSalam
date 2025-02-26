@@ -230,25 +230,32 @@
         <ul>
           <li><a href="#">Startseite</a></li>
           <li><a href="#prayerTimes">Gebetszeiten</a></li>
-          <li><a href="#">Wochenplan</a></li>
+          <li><a href="#Wochenplan">Wochenplan</a></li>
+          <li><a href="#Wissen">Eine kleine Lektion</a></li>
           <li><a href="#">Über uns</a></li>
-          <li><a href="#">Kontakt</a></li>
+          <li><a href="#Kontakt">Kontakt</a></li>
           <li>
             Vertraute Islam Quellen:
             <ul>
               <li>
-                <a href="https://islamqa.info/ge">Islam Q &amp; A (deutsch)</a>
+                <a href="https://islamqa.info/ge"
+                  >- Islam Q &amp; A (deutsch)</a
+                >
               </li>
               <li>
-                <a href="https://islamqa.info/en">Islam Q &amp; A (englisch)</a>
+                <a href="https://islamqa.info/en"
+                  >- Islam Q &amp; A (englisch)</a
+                >
               </li>
               <li>
-                <a href="https://islamqa.info/ar">Islam Q &amp; A (arabisch)</a>
+                <a href="https://islamqa.info/ar"
+                  >- Islam Q &amp; A (arabisch)</a
+                >
               </li>
             </ul>
             <ul>
               <li>
-                <a href="https://binbaz.org.sa/">Bin Baz Fatwas (arabisch)</a>
+                <a href="https://binbaz.org.sa/">- Bin Baz Fatwas (arabisch)</a>
               </li>
             </ul>
           </li>
@@ -288,16 +295,16 @@
         </div>
 
         <div class="card" style="margin-top: 2rem">
-          <h2>Wochenplan</h2>
+          <h2 id="Wochenplan">Wochenplan</h2>
           <div class="schedule">
             <p>🕌 Gemeinschaftsgebet: Immer 15 minuten nach Athan</p>
             <p>📅 Freitagsgebet: 5 minuten nach dem Eintreffen von Dhuhr</p>
-            <p>📚 Dars: Zwischen Maghrib und Isha (außer Sonntags)</p>
+            <p>📚 Dars: Unregelmäßig</p>
             <p>📖 Quran Unterricht: Sonntags 10:30</p>
           </div>
         </div>
         <div class="card">
-          <h2>Eine kleine Lektion:</h2>
+          <h2 id="Wissen">Eine kleine Lektion:</h2>
           <p id="randomKnowledge">Lade Wissen...</p>
         </div>
       </main>
@@ -308,7 +315,9 @@
 
     <footer>
       <p>Bahnweg N 31, 9475 Sevelen, Switzerland</p>
-      <p>Kontakt: masjidalsalam.info@gmail.com | Tel.: +41 77 495 74 63</p>
+      <p id="Kontakt">
+        Kontakt: masjidalsalam.info@gmail.com | Tel.: +41 77 495 74 63
+      </p>
     </footer>
 
     <script>
@@ -447,7 +456,6 @@
             "Fehler beim Laden des Wissens.";
         }
       }
-
       fetchKnowledge();
     </script>
   </body>
