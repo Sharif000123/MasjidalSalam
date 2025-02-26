@@ -413,9 +413,15 @@
       // Fetch prayer times on page load and refresh every hour
       fetchPrayerTimes();
       setInterval(fetchPrayerTimes, 3600000);
+
       async function fetchKnowledge() {
         try {
-          const response = await fetch("Wissen.txt");
+          const response = await fetch("Wisssen.txt");
+
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+
           const text = await response.text();
           console.log("Fetched Text:", text); // Debugging log
 
@@ -427,8 +433,9 @@
 
           if (snippets.length > 0) {
             const randomIndex = Math.floor(Math.random() * snippets.length);
-            document.getElementById("randomKnowledge").textContent =
-              snippets[randomIndex];
+            const formattedText = snippets[randomIndex].replace(/\n/g, "<br>"); // Preserve line breaks
+            document.getElementById("randomKnowledge").innerHTML =
+              formattedText;
           } else {
             document.getElementById("randomKnowledge").textContent =
               "Keine Wissens-Snippets gefunden.";
