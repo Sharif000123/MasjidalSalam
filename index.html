@@ -265,12 +265,12 @@
 
       <!-- Main content -->
       <main class="main-content">
-        <div class="card">
+        <div class="card" id="prayerTimes">
           <h2>
             Heutige Gebetszeiten:
             <div id="date"></div>
           </h2>
-          <div class="prayer-times" id="prayerTimes">
+          <div class="prayer-times" >
             <!-- Dynamic content will be loaded here -->
             <div class="prayer-time-item">
               <span>Fajr:</span>
@@ -292,11 +292,15 @@
               <span>Isha:</span>
               <span id="isha">-:-</span>
             </div>
+            <div class="prayer-time-item">
+              <span>Tarawih:</span>
+              <span id="tarawih">-:-</span>
+            </div>
           </div>
         </div>
 
-        <div class="card" style="margin-top: 2rem">
-          <h2 id="Wochenplan">Wochenplan</h2>
+        <div class="card" style="margin-top: 2rem" id="Wochenplan">
+          <h2>Wochenplan</h2>
           <div class="schedule">
             <p>🕌 Gemeinschaftsgebet: Immer 15 minuten nach Athan</p>
             <p>📅 Freitagsgebet: 5 minuten nach dem Eintreffen von Dhuhr</p>
@@ -304,12 +308,12 @@
             <p>📖 Quran Unterricht: Sonntags 10:30</p>
           </div>
         </div>
-        <div class="card">
-          <h2 id="Wissen">Eine kleine Lektion:</h2>
+        <div class="card" id="Wissen">
+          <h2>Eine kleine Lektion:</h2>
           <p id="randomKnowledge">Lade Wissen...</p>
         </div>
-        <div class="card" style="margin-top: 2rem; margin-bottom: 2rem">
-          <h2 id="Spenden">Spenden</h2>
+        <div class="card" style="margin-top: 2rem; margin-bottom: 2rem" id="Spenden">
+          <h2>Spenden</h2>
           <div class="schedule" style="display: flex; align-items: center">
             <img
               src="Images/AsSalam-QR-Code-Spende.png"
