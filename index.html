@@ -270,7 +270,7 @@
             Heutige Gebetszeiten:
             <div id="date"></div>
           </h2>
-          <div class="prayer-times" >
+          <div class="prayer-times">
             <!-- Dynamic content will be loaded here -->
             <div class="prayer-time-item">
               <span>Fajr:</span>
@@ -297,6 +297,7 @@
               <span id="tarawih">-:-</span>
             </div>
           </div>
+          <a href="https://www.izrs.ch/gebetszeiten.html" style="text-decoration:none"> <strong>Gebetszeiten für den ganzen Monat öffnen</strong> (Chur Zeit)</a>
         </div>
 
         <div class="card" style="margin-top: 2rem" id="Wochenplan">
@@ -312,7 +313,11 @@
           <h2>Eine kleine Lektion:</h2>
           <p id="randomKnowledge">Lade Wissen...</p>
         </div>
-        <div class="card" style="margin-top: 2rem; margin-bottom: 2rem" id="Spenden">
+        <div
+          class="card"
+          style="margin-top: 2rem; margin-bottom: 2rem"
+          id="Spenden"
+        >
           <h2>Spenden</h2>
           <div class="schedule" style="display: flex; align-items: center">
             <img
@@ -404,6 +409,10 @@
             document.getElementById("isha").textContent = adjustTime(
               timings.Isha,
               offsets.Isha
+            );
+            document.getElementById("tarawih").textContent = adjustTime(
+              timings.Isha,
+              offsets.Isha + 30
             );
           } else {
             throw new Error("Prayer times data not available");
