@@ -292,10 +292,10 @@
               <span>Isha:</span>
               <span id="isha">-:-</span>
             </div>
-            <div class="prayer-time-item">
+            <!-- <div class="prayer-time-item">
               <span>Tarawih:</span>
               <span id="tarawih">-:-</span>
-            </div>
+            </div> -->
           </div>
           <a href="https://www.izrs.ch/gebetszeiten.html" style="text-decoration:none"> <strong>Gebetszeiten für den ganzen Monat öffnen</strong> (Chur Zeit)</a>
         </div>
@@ -374,12 +374,12 @@
         const apiUrl = `https://api.aladhan.com/v1/timingsByCity?city=${city}&country=${country}&method=${method}`;
 
         // Define individual offsets in minutes for each prayer time
-        const offsets = {
-          Fajr: -6, // Subtract 4 minutes
-          Dhuhr: 0, // Add 1 minute
-          Asr: 2, // Add 2 minutes
-          Maghrib: 0, // Add 1 minute
-          Isha: 8, // Add 9 minutes
+        const offsets = { //corrections on 06.04.25
+          Fajr: -7, // Subtract 7 minutes
+          Dhuhr: 0, // Add 0 minutes
+          Asr: 1, // Add 1 minutes
+          Maghrib: 0, // Add 0 minutes
+          Isha: 8, // Add 8 minutes
         };
 
         try {
@@ -410,10 +410,10 @@
               timings.Isha,
               offsets.Isha
             );
-            document.getElementById("tarawih").textContent = adjustTime(
-              timings.Isha,
-              offsets.Isha + 30
-            );
+            // document.getElementById("tarawih").textContent = adjustTime(
+            //   timings.Isha,
+            //   offsets.Isha + 30
+            // );
           } else {
             throw new Error("Prayer times data not available");
           }
