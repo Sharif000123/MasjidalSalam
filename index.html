@@ -323,7 +323,7 @@
     </div>
 
   </div>
-  <!a style="text-decoration:none"> (Sevelen Zeit)</a>
+  <!a style="text-decoration:none"> Sevelen Zeit (können leicht abweichen)</a>
 </div>
 
             <!-- <div class="prayer-time-item">
@@ -441,7 +441,7 @@ async function fetchPrayerTimes() {
     document.getElementById("isha_adhan").textContent = ishaAdhan;
 
     // set iqamah (Gebet) displays = adhān + iqamahOffset (or override for isha)
-    document.getElementById("fajr_gebet").textContent = `[Gebet: ${adjustTime(fajrAdhan, iqamahOffset)}]`;
+    document.getElementById("fajr_gebet").textContent = `[Gebet: ${adjustTime(fajrAdhan, 30)}]`;
     document.getElementById("dhuhr_gebet").textContent = `[Gebet: ${adjustTime(dhuhrAdhan, iqamahOffset)}]`;
     document.getElementById("asr_gebet").textContent = `[Gebet: ${adjustTime(asrAdhan, iqamahOffset)}]`;
     document.getElementById("maghrib_gebet").textContent = `[Gebet: ${adjustTime(maghribAdhan, iqamahOffset)}]`;
@@ -449,12 +449,12 @@ async function fetchPrayerTimes() {
     if (ishaFixedTime) {
       document.getElementById("isha_gebet").textContent = `[Gebet: ${ishaFixedTime}]`;
     } else {
-      document.getElementById("isha_gebet").textContent = `[Gebet: ${adjustTime(ishaAdhan, iqamahOffset)}]`;
+      document.getElementById("isha_gebet").textContent = `[Gebet: 19:30]`;
     }
 
     // Juma static example
     document.getElementById("juma").textContent = "12:30";
-    document.getElementById("juma_note").textContent = `[Gebet: ${adjustTime("12:30", iqamahOffset)}]`;
+    // document.getElementById("juma_note").textContent = `[Gebet: 12:30]`;
 
   } catch (error) {
     console.error("Error fetching prayer times:", error);
