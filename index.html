@@ -265,72 +265,39 @@
 
       <!-- Main content -->
       <main class="main-content">
-       <div class="card" id="prayerTimes">
-  <h2>
-    Heutige Gebetszeiten:
-    <div id="date"></div>
-  </h2>
-
-  <div class="prayer-times">
-    <div class="prayer-time-item">
-      <span>Fajr (Adhan):</span>
-      <div style="text-align:right">
-        <span id="fajr_adhan">-:-</span>
-        <p id="fajr_gebet" style="text-align:left;margin-top:-0.5rem;color:gray">
-          <!-- filled by JS -->
-        </p>
-      </div>
-    </div>
-
-    <div class="prayer-time-item">
-      <span>Dhuhr (Adhan):</span>
-      <div style="text-align:right">
-        <span id="dhuhr_adhan">-:-</span>
-        <p id="dhuhr_gebet" style="text-align:left;margin-top:-0.5rem;color:gray"></p>
-      </div>
-    </div>
-
-    <div class="prayer-time-item">
-      <span>Asr (Adhan):</span>
-      <div style="text-align:right">
-        <span id="asr_adhan">-:-</span>
-        <p id="asr_gebet" style="text-align:left;margin-top:-0.5rem;color:gray"></p>
-      </div>
-    </div>
-
-    <div class="prayer-time-item">
-      <span>Maghrib (Adhan):</span>
-      <div style="text-align:right">
-        <span id="maghrib_adhan">-:-</span>
-        <p id="maghrib_gebet" style="text-align:left;margin-top:-0.5rem;color:gray"></p>
-      </div>
-    </div>
-
-    <div class="prayer-time-item">
-      <span>Isha (Adhan):</span>
-      <div style="text-align:right">
-        <span id="isha_adhan">-:-</span>
-        <p id="isha_gebet" style="text-align:left;;margin-top:-0.5rem;color:gray"></p>
-      </div>
-    </div>
-
-    <div class="prayer-time-item">
-      <span>Juma:</span>
-      <div style="text-align:right">
-        <span id="juma">-:-</span>
-        <p id="juma_note" style="text-align:left;margin-top:-0.5rem;color:gray"> <!-- optional note --></p>
-      </div>
-    </div>
-
-  </div>
-  <!a style="text-decoration:none"> Sevelen Zeit (können leicht abweichen)</a>
-</div>
-
+        <div class="card" id="prayerTimes">
+          <h2>
+            Heutige Gebetszeiten:
+            <div id="date"></div>
+          </h2>
+          <div class="prayer-times">
+            <!-- Dynamic content will be loaded here -->
+            <div class="prayer-time-item">
+              <span>Fajr:</span>
+              <span id="fajr">-:-</span>
+            </div>
+            <div class="prayer-time-item">
+              <span>Dhuhr:</span>
+              <span id="dhuhr">-:-</span>
+            </div>
+            <div class="prayer-time-item">
+              <span>Asr:</span>
+              <span id="asr">-:-</span>
+            </div>
+            <div class="prayer-time-item">
+              <span>Maghrib:</span>
+              <span id="maghrib">-:-</span>
+            </div>
+            <div class="prayer-time-item">
+              <span>Isha:</span>
+              <span id="isha">-:-</span>
+            </div>
             <!-- <div class="prayer-time-item">
               <span>Tarawih:</span>
               <span id="tarawih">-:-</span>
             </div> -->
           </div>
+          <!a style="text-decoration:none"> (Sevelen Zeit)</a>
           <!-- <a href="https://www.izrs.ch/gebetszeiten.html" style="text-decoration:none"> <strong>Gebetszeiten für den ganzen Monat öffnen</strong> (Chur Zeit)</a> -->
         </div>
 
@@ -367,7 +334,6 @@
               <p>CH-9475 Sevelen</p>
             </div>
           </div>
-          <br>
         </div>
       </main>
     </div>
@@ -389,88 +355,82 @@
       d = n.getDate();
       document.getElementById("date").innerHTML = d + "." + m + "." + y;
       // Helper function to adjust time by offset (in minutes)
-// helper (same as you had)
-function adjustTime(timeStr, offsetMinutes) {
-  // accept "HH:mm" strings
-  const [hours, minutes] = timeStr.split(":").map(Number);
-  let totalMinutes = hours * 60 + minutes + offsetMinutes;
-  // normalize
-  totalMinutes = ((totalMinutes % 1440) + 1440) % 1440;
-  const newHours = Math.floor(totalMinutes / 60).toString().padStart(2, "0");
-  const newMinutes = (totalMinutes % 60).toString().padStart(2, "0");
-  return `${newHours}:${newMinutes}`;
-}
+      function adjustTime(timeStr, offsetMinutes) {
+        const [hours, minutes] = timeStr.split(":").map(Number);
+        let totalMinutes = hours * 60 + minutes + offsetMinutes;
+        // Normalize in case the adjustment goes past midnight
+        totalMinutes = ((totalMinutes % 1440) + 1440) % 1440;
+        const newHours = Math.floor(totalMinutes / 60)
+          .toString()
+          .padStart(2, "0");
+        const newMinutes = (totalMinutes % 60).toString().padStart(2, "0");
+        return `${newHours}:${newMinutes}`;
+      }
 
-async function fetchPrayerTimes() {
-  const city = "Chur";
-  const country = "Switzerland";
-  const method = 12;
-  const apiUrl = `https://api.aladhan.com/v1/timingsByCity?city=${city}&country=${country}&method=${method}`;
+      async function fetchPrayerTimes() {
+        // Define your city, country, and method (calculation method 12)
+        const city = "Chur";
+        const country = "Switzerland";
+        const method = 12;
+        const apiUrl = `https://api.aladhan.com/v1/timingsByCity?city=${city}&country=${country}&method=${method}`;
 
-  // your per-prayer offsets (keeps your corrections)
-  const offsets = {
-    Fajr: -1,
-    Dhuhr: 4,
-    Asr: 1,
-    Maghrib: 3,
-    Isha: 10
-  };
+        // Define individual offsets in minutes for each prayer time
+        const offsets = { //corrections on 06.04.25
+          Fajr: -7, // Subtract 7 minutes
+          Dhuhr: 0, // Add 0 minutes
+          Asr: -1, // Add 1 minutes
+          Maghrib: 1, // Add 0 minutes
+          Isha: 8, // Add 8 minutes
+        };
 
-  const iqamahOffset = 15; // minutes after adhan -> Gebet (change this variable to adjust globally)
-  // If you want Isha Gebet to be fixed regardless of adhan, set a time here (e.g. "19:30"), otherwise set null
-  const ishaFixedTime = null; // or "19:30"
+        try {
+          const response = await fetch(apiUrl);
+          const data = await response.json();
 
-  try {
-    const response = await fetch(apiUrl);
-    const data = await response.json();
-    if (!data || !data.data || !data.data.timings) throw new Error("Prayer times data not available");
-
-    const timings = data.data.timings;
-
-    // compute adhān strings (apply offsets), then compute iqamah as adhān + iqamahOffset
-    const fajrAdhan = adjustTime(timings.Fajr, offsets.Fajr);
-    const dhuhrAdhan = adjustTime(timings.Dhuhr, offsets.Dhuhr);
-    const asrAdhan = adjustTime(timings.Asr, offsets.Asr);
-    const maghribAdhan = adjustTime(timings.Maghrib, offsets.Maghrib);
-    const ishaAdhan = adjustTime(timings.Isha, offsets.Isha);
-
-    // set adhān displays
-    document.getElementById("fajr_adhan").textContent = fajrAdhan;
-    document.getElementById("dhuhr_adhan").textContent = dhuhrAdhan;
-    document.getElementById("asr_adhan").textContent = asrAdhan;
-    document.getElementById("maghrib_adhan").textContent = maghribAdhan;
-    document.getElementById("isha_adhan").textContent = ishaAdhan;
-
-    // set iqamah (Gebet) displays = adhān + iqamahOffset (or override for isha)
-    document.getElementById("fajr_gebet").textContent = `[Gebet: ${adjustTime(fajrAdhan, 30)}]`;
-    document.getElementById("dhuhr_gebet").textContent = `[Gebet: ${adjustTime(dhuhrAdhan, iqamahOffset)}]`;
-    document.getElementById("asr_gebet").textContent = `[Gebet: ${adjustTime(asrAdhan, iqamahOffset)}]`;
-    document.getElementById("maghrib_gebet").textContent = `[Gebet: ${adjustTime(maghribAdhan, iqamahOffset)}]`;
-
-    if (ishaFixedTime) {
-      document.getElementById("isha_gebet").textContent = `[Gebet: ${ishaFixedTime}]`;
-    } else {
-      document.getElementById("isha_gebet").textContent = `[Gebet: 19:30]`;
-    }
-
-    // Juma static example
-    document.getElementById("juma").textContent = "12:30";
-    // document.getElementById("juma_note").textContent = `[Gebet: 12:30]`;
-
-  } catch (error) {
-    console.error("Error fetching prayer times:", error);
-    // keep your fallback behavior (you can also set the adhān + gebet fallbacks here)
-    document.getElementById("prayerTimes").innerHTML = `
-      <p>⚠️ Live-Zeiten nicht verfügbar.</p>
-      <div class="prayer-time-item"><span>Fajr:</span> --:--</div>
-      <div class="prayer-time-item"><span>Dhuhr:</span> --:--</div>
-      <div class="prayer-time-item"><span>Asr:</span> --:--</div>
-      <div class="prayer-time-item"><span>Maghrib:</span> --:--</div>
-      <div class="prayer-time-item"><span>Isha:</span> --:--</div>
-      <div class="prayer-time-item"><span>Juma:</span> --:--</div>
-    `;
-  }
-}
+          // Check if data is valid
+          if (data && data.data && data.data.timings) {
+            const timings = data.data.timings;
+            // Apply individual offsets to each prayer time
+            document.getElementById("fajr").textContent = adjustTime(
+              timings.Fajr,
+              offsets.Fajr
+            );
+            document.getElementById("dhuhr").textContent = adjustTime(
+              timings.Dhuhr,
+              offsets.Dhuhr
+            );
+            document.getElementById("asr").textContent = adjustTime(
+              timings.Asr,
+              offsets.Asr
+            );
+            document.getElementById("maghrib").textContent = adjustTime(
+              timings.Maghrib,
+              offsets.Maghrib
+            );
+            document.getElementById("isha").textContent = adjustTime(
+              timings.Isha,
+              offsets.Isha
+            );
+            // document.getElementById("tarawih").textContent = adjustTime(
+            //   timings.Isha,
+            //   offsets.Isha + 30
+            // );
+          } else {
+            throw new Error("Prayer times data not available");
+          }
+        } catch (error) {
+          console.error("Error fetching prayer times:", error);
+          // Fallback to static times (dummy values)
+          document.getElementById("prayerTimes").innerHTML = `
+                    <p⚠️ Live-Zeiten nicht verfügbar.</p>
+                    <div class="prayer-time-item"><span>Fajr:</span> --:--</div>
+                    <div class="prayer-time-item"><span>Dhuhr:</span> --:--</div>
+                    <div class="prayer-time-item"><span>Asr:</span> --:--</div>
+                    <div class="prayer-time-item"><span>Maghrib:</span> --:--</div>
+                    <div class="prayer-time-item"><span>Isha:</span> --:--</div>
+                  `;
+        }
+      }
 
       // Mobile sidebar toggle
       const menuToggle = document.getElementById("menuToggle");
