@@ -1,494 +1,644 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Masjid al Salam - Sevelen</title>
-    <link rel="icon" type="image/ico" href="Images/websiteIcon.ico" />
 
-    <meta
-      name="description"
-      content="Website der Masjid al Salam in Sevelen, Schweiz. Hier sind die aktuellen Gebetszeiten und Informationen über die Moschee zu finden."
-    />
-    <meta
-      name="keywords"
-      content="Masjid al Salam, Sevelen, Moschee, Gebetszeiten, Islam, Schweiz"
-    />
-    <meta name="author" content="Masjid al Salam" />
-    <meta name="robots" content="index" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Masjid al Salam - Sevelen</title>
+  <link rel="icon" type="image/ico" href="Images/websiteIcon.ico" />
 
-    <!-- Open Graph meta tags for social sharing -->
-    <meta property="og:title" content="Masjid al Salam - Sevelen" />
-    <meta
-      property="og:description"
-      content="Besuche unsere Seite für aktuelle Gebetszeiten und Informationen über die Masjid al Salam in Sevelen."
-    />
-    <meta
-      property="og:image"
-      content="https://www.masjidalsalam.ch/Images/websiteIcon.ico"
-    />
-    <meta property="og:url" content="https://www.masjidalsalam.ch" />
-    <meta property="og:type" content="website" />
+  <meta name="description"
+    content="Website der Masjid al Salam in Sevelen, Schweiz. Hier sind die aktuellen Gebetszeiten und Informationen über die Moschee zu finden." />
+  <meta name="keywords" content="Masjid al Salam, Sevelen, Moschee, Gebetszeiten, Islam, Schweiz" />
+  <meta name="author" content="Masjid al Salam" />
+  <meta name="robots" content="index" />
 
-    <style>
-      :root {
-        --primary-green: #2e7d32;
-        --secondary-green: #388e3c;
-        --light-green: #c8e6c9;
-      }
+  <!-- Open Graph meta tags for social sharing -->
+  <meta property="og:title" content="Masjid al Salam - Sevelen" />
+  <meta property="og:description"
+    content="Besuche unsere Seite für aktuelle Gebetszeiten und Informationen über die Masjid al Salam in Sevelen." />
+  <meta property="og:image" content="https://www.masjidalsalam.ch/Images/websiteIcon.ico" />
+  <meta property="og:url" content="https://www.masjidalsalam.ch" />
+  <meta property="og:type" content="website" />
 
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      }
+  <style>
+    :root {
+      --primary-green: #2e7d32;
+      --secondary-green: #388e3c;
+      --light-green: #c8e6c9;
+    }
 
-      body {
-        background-color: #ffffff;
-      }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    }
 
-      header {
-        background-color: var(--primary-green);
-        color: white;
-        text-align: center;
-        padding: 2rem;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        position: relative;
-      }
+    body {
+      background-color: #ffffff;
+    }
 
-      /* Hamburger menu button */
+    header {
+      background-color: var(--primary-green);
+      color: white;
+      text-align: center;
+      padding: 2rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      position: relative;
+    }
+
+    /* Hamburger menu button */
+    .menu-toggle {
+      display: none;
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      background: transparent;
+      /* Transparent background */
+      border: none;
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+      z-index: 1100;
+    }
+
+    /* Layout container for sidebar + main content */
+    .layout {
+      display: grid;
+      grid-template-columns: 250px 1fr;
+      gap: 20px;
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 20px;
+    }
+
+    /* Sidebar styles */
+    .sidebar {
+      background-color: var(--light-green);
+      padding: 1rem;
+      border-radius: 10px;
+      position: relative;
+    }
+
+    .sidebar h3 {
+      margin-bottom: 1rem;
+      color: var(--secondary-green);
+      margin-top: 3rem;
+      /* Add this line to create space between the burger symbol and the heading */
+    }
+
+    .sidebar ul {
+      list-style: none;
+    }
+
+    .sidebar li {
+      margin-bottom: 0.5rem;
+    }
+
+    .sidebar a {
+      text-decoration: none;
+      color: var(--primary-green);
+    }
+
+    /* Close button inside the sidebar */
+    .close-sidebar {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: transparent;
+      border: none;
+      color: var(--primary-green);
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    /* Main content styles */
+
+    .card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      margin-bottom: 2rem;
+    }
+
+    .card h2 {
+      color: var(--secondary-green);
+      margin-bottom: 1rem;
+      border-bottom: 2px solid var(--light-green);
+      padding-bottom: 0.5rem;
+    }
+
+    .prayer-times {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .prayer-time-item {
+      display: grid;
+      grid-template-columns: minmax(120px, auto) 1fr;
+      /* label min width | expanding right column */
+      align-items: start;
+      column-gap: 12px;
+      margin-bottom: 0.75rem;
+      width: 100%;
+    }
+
+    .time-stack {
+      text-align: right;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      /* consistent spacing between adhan and iqama */
+      width: 100%;
+      /* take full grid column width */
+      align-items: stretch;
+      /* ensure children fill width */
+      justify-self: stretch;
+      /* stretch within the grid cell */
+    }
+
+    .time-stack>span {
+      display: block;
+      /* make adhan line full width */
+      width: 100%;
+    }
+
+    .time-stack>p {
+      display: block;
+      /* ensure full-width behavior applies */
+      width: 100%;
+      margin: 0;
+      /* remove default p margin to align flush */
+      flex: 0 0 auto;
+      /* don't shrink */
+      align-self: stretch;
+      /* fill the available width */
+    }
+
+    /* Stronger specificity inside the time stack */
+    .time-stack .iqama-line {
+      display: block !important;
+      width: 100% !important;
+      text-align: right;
+    }
+
+    .adhan-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 1em;
+    }
+
+    .iqama-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 1px;
+      background: #c8e6c9;
+      border-left: 0px solid var(--secondary-green);
+      border-radius: 6px;
+      font-weight: 600;
+      color: #124d18;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    }
+
+
+    .iqama-line {
+      /* Base Styling */
+      color: var(--primary-green);
+      /* Darker green for good contrast */
+      font-weight: 600;
+      /* Slightly bold */
+      font-size: 1.02em;
+      /* Subtle emphasis */
+
+      /* Modern Visibility & Highlight */
+      background-color: var(--light-green);
+      /* Light background */
+      border-left: 4px solid var(--secondary-green);
+      /* Slimmer accent */
+      padding: 6px 10px;
+      /* Slimmer spacing */
+      border-radius: 5px;
+      /* Soft rounding of corners */
+      margin-top: 4px;
+      /* Tight separation */
+      display: block;
+      /* Stretch to the width of the right column */
+      width: 100% !important;
+      /* Ensure full width within the time stack */
+      text-align: right;
+      /* Match adhan alignment */
+      letter-spacing: 0.1px;
+      /* Slightly improve readability */
+      box-sizing: border-box;
+      /* include padding in width */
+    }
+
+
+    footer {
+      background-color: var(--primary-green);
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+
+    #date {
+      display: inline;
+      /* or use inline-block for more flexibility */
+    }
+
+    /* Mobile Styles */
+    @media (max-width: 768px) {
       .menu-toggle {
-        display: none;
-        position: absolute;
-        top: 1rem;
-        left: 1rem;
-        background: transparent; /* Transparent background */
-        border: none;
-        color: white;
-        font-size: 24px;
-        cursor: pointer;
-        z-index: 1100;
+        display: block;
       }
 
-      /* Layout container for sidebar + main content */
       .layout {
-        display: grid;
-        grid-template-columns: 250px 1fr;
-        gap: 20px;
-        max-width: 1200px;
-        margin: 2rem auto;
-        padding: 0 20px;
-      }
-
-      /* Sidebar styles */
-      .sidebar {
-        background-color: var(--light-green);
-        padding: 1rem;
-        border-radius: 10px;
+        grid-template-columns: 1fr;
         position: relative;
       }
 
-      .sidebar h3 {
-        margin-bottom: 1rem;
-        color: var(--secondary-green);
-        margin-top: 3rem; /* Add this line to create space between the burger symbol and the heading */
+      /* Hide sidebar off-canvas by default */
+      .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 250px;
+        height: 100%;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        z-index: 1000;
       }
 
-      .sidebar ul {
-        list-style: none;
+      /* Sidebar open state */
+      .sidebar.open {
+        transform: translateX(0);
       }
 
-      .sidebar li {
-        margin-bottom: 0.5rem;
+      /* Dim overlay when sidebar is open */
+      .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 900;
+        display: none;
       }
 
-      .sidebar a {
-        text-decoration: none;
-        color: var(--primary-green);
-      }
-
-      /* Close button inside the sidebar */
-      .close-sidebar {
-        position: absolute;
-        top: 1rem;
-        right: 1rem;
-        background: transparent;
-        border: none;
-        color: var(--primary-green);
-        font-size: 24px;
-        cursor: pointer;
-      }
-
-      /* Main content styles */
-      .main-content {
-      }
-
-      .card {
-        background: white;
-        padding: 1.5rem;
-        border-radius: 10px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        margin-bottom: 2rem;
-      }
-
-      .card h2 {
-        color: var(--secondary-green);
-        margin-bottom: 1rem;
-        border-bottom: 2px solid var(--light-green);
-        padding-bottom: 0.5rem;
-      }
-
-      .prayer-times {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 2rem;
-        margin-bottom: 3rem;
-      }
-
-      .prayer-time-item {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 0.5rem;
+      .overlay.visible {
+        display: block;
       }
 
       footer {
-        background-color: var(--primary-green);
-        color: white;
-        text-align: center;
-        padding: 1rem;
-        position: fixed;
-        bottom: 0;
-        width: 100%;
+        position: static;
       }
-      #date {
-        display: inline; /* or use inline-block for more flexibility */
-      }
+    }
 
-      /* Mobile Styles */
-      @media (max-width: 768px) {
-        .menu-toggle {
-          display: block;
-        }
-        .layout {
-          grid-template-columns: 1fr;
-          position: relative;
-        }
-        /* Hide sidebar off-canvas by default */
-        .sidebar {
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 250px;
-          height: 100%;
-          transform: translateX(-100%);
-          transition: transform 0.3s ease;
-          z-index: 1000;
-        }
-        /* Sidebar open state */
-        .sidebar.open {
-          transform: translateX(0);
-        }
-        /* Dim overlay when sidebar is open */
-        .overlay {
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background: rgba(0, 0, 0, 0.5);
-          z-index: 900;
-          display: none;
-        }
-        .overlay.visible {
-          display: block;
-        }
-        footer {
-          position: static;
-        }
-      }
-      @media (min-width: 769px) {
-        .menu-toggle,
-        .close-sidebar {
-          display: none;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <header>
-      <button class="menu-toggle" id="menuToggle">☰</button>
-      <h1>Masjid al Salam</h1>
-      <p>Moschee in Sevelen, Schweiz</p>
-    </header>
+    @media (min-width: 769px) {
 
-    <div class="layout">
-      <!-- Sidebar -->
-      <aside class="sidebar" id="sidebar">
-        <button class="close-sidebar" id="closeSidebar">✕</button>
-        <h3>Navigation</h3>
-        <ul>
-          <li><a href="">Startseite</a></li>
-          <li><a href="#prayerTimes">Gebetszeiten</a></li>
-          <li><a href="#Wochenplan">Wochenplan</a></li>
-          <li><a href="#Wissen">Eine kleine Lektion</a></li>
-          <li><a href="#">Über uns</a></li>
-          <li><a href="#Kontakt">Kontakt</a></li>
-          <li><a href="#Spenden">Spenden</a></li>
-          <li>
-            Vertraute Islam Quellen:
-            <ul>
-              <li>
-                <a href="https://islamqa.info/ge"
-                  >- Islam Q &amp; A (deutsch)</a
-                >
-              </li>
-              <li>
-                <a href="https://islamqa.info/en"
-                  >- Islam Q &amp; A (englisch)</a
-                >
-              </li>
-              <li>
-                <a href="https://islamqa.info/ar"
-                  >- Islam Q &amp; A (arabisch)</a
-                >
-              </li>
-            </ul>
-            <ul>
-              <li>
-                <a href="https://binbaz.org.sa/">- Bin Baz Fatwas (arabisch)</a>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </aside>
+      .menu-toggle,
+      .close-sidebar {
+        display: none;
+      }
+    }
+  </style>
+</head>
 
-      <!-- Main content -->
-      <main class="main-content">
-        <div class="card" id="prayerTimes">
-          <h2>
-            Heutige Gebetszeiten:
-            <div id="date"></div>
-          </h2>
-          <div class="prayer-times">
-            <!-- Dynamic content will be loaded here -->
-            <div class="prayer-time-item">
-              <span>Fajr:</span>
-              <span id="fajr">-:-</span>
+<body>
+  <header>
+    <button class="menu-toggle" id="menuToggle">☰</button>
+    <h1>Masjid al Salam</h1>
+    <p>Moschee in Sevelen, Schweiz</p>
+  </header>
+
+  <div class="layout">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <button class="close-sidebar" id="closeSidebar">✕</button>
+      <h3>Navigation</h3>
+      <ul>
+        <li><a href="">Startseite</a></li>
+        <li><a href="#prayerTimes">Gebetszeiten</a></li>
+        <li><a href="#Wochenplan">Wochenplan</a></li>
+        <li><a href="#Wissen">Eine kleine Lektion</a></li>
+        <li><a href="#">Über uns</a></li>
+        <li><a href="#Kontakt">Kontakt</a></li>
+        <li><a href="#Spenden">Spenden</a></li>
+        <li>
+          Vertraute Islam Quellen:
+          <ul>
+            <li>
+              <a href="https://islamqa.info/ge">- Islam Q &amp; A (deutsch)</a>
+            </li>
+            <li>
+              <a href="https://islamqa.info/en">- Islam Q &amp; A (englisch)</a>
+            </li>
+            <li>
+              <a href="https://islamqa.info/ar">- Islam Q &amp; A (arabisch)</a>
+            </li>
+          </ul>
+          <ul>
+            <li>
+              <a href="https://binbaz.org.sa/">- Bin Baz Fatwas (arabisch)</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </aside>
+
+    <!-- Main content -->
+    <main class="main-content">
+      <div class="card" id="prayerTimes">
+        <h2>
+          Heutige Gebetszeiten:
+          <div id="date"></div>
+        </h2>
+
+        <div class="prayer-times">
+          <div class="prayer-block">
+            <div class="adhan-row">
+              <span>Fajr (Adhan):</span>
+              <span id="fajr_adhan">-:-</span>
             </div>
-            <div class="prayer-time-item">
-              <span>Dhuhr:</span>
-              <span id="dhuhr">-:-</span>
+            <div class="iqama-row">
+              <span>Iqama:</span>
+              <span id="fajr_gebet">-:-</span>
             </div>
-            <div class="prayer-time-item">
-              <span>Asr:</span>
-              <span id="asr">-:-</span>
+          </div>
+
+          <div class="prayer-block">
+            <div class="adhan-row">
+              <span>Dhuhr (Adhan):</span>
+              <span id="dhuhr_adhan">-:-</span>
             </div>
-            <div class="prayer-time-item">
-              <span>Maghrib:</span>
-              <span id="maghrib">-:-</span>
+            <div class="iqama-row">
+              <span>Iqama:</span>
+              <span id="dhuhr_gebet">-:-</span>
             </div>
-            <div class="prayer-time-item">
-              <span>Isha:</span>
-              <span id="isha">-:-</span>
+          </div>
+
+          <div class="prayer-block">
+            <div class="adhan-row">
+              <span>Asr (Adhan):</span>
+              <span id="asr_adhan">-:-</span>
             </div>
-            <!-- <div class="prayer-time-item">
+            <div class="iqama-row">
+              <span>Iqama:</span>
+              <span id="asr_gebet">-:-</span>
+            </div>
+          </div>
+
+          <div class="prayer-block">
+            <div class="adhan-row">
+              <span>Maghrib (Adhan):</span>
+              <span id="maghrib_adhan">-:-</span>
+            </div>
+            <div class="iqama-row">
+              <span>Iqama:</span>
+              <span id="maghrib_gebet">-:-</span>
+            </div>
+          </div>
+
+          <div class="prayer-block">
+            <div class="adhan-row">
+              <span>Isha (Adhan):</span>
+              <span id="isha_adhan">-:-</span>
+            </div>
+            <div class="iqama-row">
+              <span>Iqama:</span>
+              <span id="isha_gebet">-:-</span>
+            </div>
+          </div>
+
+          <div class="prayer-time-item">
+            <span>Juma:</span>
+            <div class="time-stack">
+              <span id="juma">-:-</span>
+              <p id="juma_note"></p>
+            </div>
+          </div>
+
+        </div>
+        <!a style="text-decoration:none"> Sevelen Zeit (können leicht abweichen)</a>
+      </div>
+
+      <!-- <div class="prayer-time-item">
               <span>Tarawih:</span>
               <span id="tarawih">-:-</span>
             </div> -->
-          </div>
-          <!a style="text-decoration:none"> Sevelen Zeit (Zeiten können abweichen)</a>
-          <!-- <a href="https://www.izrs.ch/gebetszeiten.html" style="text-decoration:none"> <strong>Gebetszeiten für den ganzen Monat öffnen</strong> (Chur Zeit)</a> -->
-        </div>
+  </div>
+  <!-- <a href="https://www.izrs.ch/gebetszeiten.html" style="text-decoration:none"> <strong>Gebetszeiten für den ganzen Monat öffnen</strong> (Chur Zeit)</a> -->
+  </div>
 
-        <div class="card" style="margin-top: 2rem" id="Wochenplan">
-          <h2>Wochenplan</h2>
-          <div class="schedule">
-            <p>🕌 Gemeinschaftsgebet: Immer 15 minuten nach Athan</p>
-            <p>📅 Freitagsgebet: 5 minuten nach dem Eintreffen von Dhuhr</p>
-            <p>📚 Dars: Unregelmäßig</p>
-            <p>📖 Quran Unterricht: Sonntags 10:30</p>
-          </div>
-        </div>
-        <div class="card" id="Wissen">
-          <h2>Eine kleine Lektion:</h2>
-          <p id="randomKnowledge">Lade Wissen...</p>
-        </div>
-        <div
-          class="card"
-          style="margin-top: 2rem; margin-bottom: 2rem"
-          id="Spenden"
-        >
-          <h2>Spenden</h2>
-          <div class="schedule" style="display: flex; align-items: center">
-            <img
-              src="Images/AsSalam-QR-Code-Spende.png"
-              alt="QR-Code für Spenden"
-              style="width: 180px; margin-right: 20px"
-            />
-            <div>
-              <p>Konto / Zahlbar an</p>
-              <p>CH35 0078 1627 1878 8200 0</p>
-              <p>Arabische Kultur Verein Rheintal</p>
-              <p>Bahnweg 31</p>
-              <p>CH-9475 Sevelen</p>
-            </div>
-          </div>
-        </div>
-      </main>
+  <div class="card" style="margin-top: 2rem" id="Wochenplan">
+    <h2>Wochenplan</h2>
+    <div class="schedule">
+      <p>🕌 Gemeinschaftsgebet: Immer 15 minuten nach Athan</p>
+      <p>📅 Freitagsgebet: 12:30 Uhr</p>
+      <p>📚 Dars: Unregelmäßig</p>
+      <p>📖 Quran Unterricht: Sonntags 10:30</p>
     </div>
+  </div>
+  <div class="card" id="Wissen">
+    <h2>Eine kleine Lektion:</h2>
+    <p id="randomKnowledge">Lade Wissen...</p>
+  </div>
+  <div class="card" style="margin-top: 2rem; margin-bottom: 2rem" id="Spenden">
+    <h2>Spenden</h2>
+    <div class="schedule" style="display: flex; align-items: center">
+      <img src="Images/AsSalam-QR-Code-Spende.png" alt="QR-Code für Spenden" style="width: 180px; margin-right: 20px" />
+      <div>
+        <p>Konto / Zahlbar an</p>
+        <p>CH35 0078 1627 1878 8200 0</p>
+        <p>Arabische Kultur Verein Rheintal</p>
+        <p>Bahnweg 31</p>
+        <p>CH-9475 Sevelen</p>
+      </div>
+    </div>
+    <br>
+  </div>
+  </main>
+  </div>
 
-    <!-- Optional overlay for mobile when sidebar is open -->
-    <div class="overlay" id="overlay"></div>
+  <!-- Optional overlay for mobile when sidebar is open -->
+  <div class="overlay" id="overlay"></div>
 
-    <footer>
-      <p>Bahnweg N 31, 9475 Sevelen, Switzerland</p>
-      <p id="Kontakt">
-        Kontakt: masjidalsalam.info@gmail.com | Tel.: +41 77 495 74 63
-      </p>
-    </footer>
+  <footer>
+    <p>Bahnweg N 31, 9475 Sevelen, Switzerland</p>
+    <p id="Kontakt">
+      Kontakt: masjidalsalam.info@gmail.com | Tel.: +41 77 495 74 63
+    </p>
+  </footer>
 
-    <script>
-      n = new Date();
-      y = n.getFullYear() % 100;
-      m = n.getMonth() + 1;
-      d = n.getDate();
-      document.getElementById("date").innerHTML = d + "." + m + "." + y;
-      // Helper function to adjust time by offset (in minutes)
-      function adjustTime(timeStr, offsetMinutes) {
-        const [hours, minutes] = timeStr.split(":").map(Number);
-        let totalMinutes = hours * 60 + minutes + offsetMinutes;
-        // Normalize in case the adjustment goes past midnight
-        totalMinutes = ((totalMinutes % 1440) + 1440) % 1440;
-        const newHours = Math.floor(totalMinutes / 60)
-          .toString()
-          .padStart(2, "0");
-        const newMinutes = (totalMinutes % 60).toString().padStart(2, "0");
-        return `${newHours}:${newMinutes}`;
-      }
+  <script>
+    n = new Date();
+    y = n.getFullYear() % 100;
+    m = n.getMonth() + 1;
+    d = n.getDate();
+    document.getElementById("date").innerHTML = d + "." + m + "." + y;
+    // Helper function to adjust time by offset (in minutes)
+    // helper (same as you had)
+    function adjustTime(timeStr, offsetMinutes) {
+      // accept "HH:mm" strings
+      const [hours, minutes] = timeStr.split(":").map(Number);
+      let totalMinutes = hours * 60 + minutes + offsetMinutes;
+      // normalize
+      totalMinutes = ((totalMinutes % 1440) + 1440) % 1440;
+      const newHours = Math.floor(totalMinutes / 60).toString().padStart(2, "0");
+      const newMinutes = (totalMinutes % 60).toString().padStart(2, "0");
+      return `${newHours}:${newMinutes}`;
+    }
 
-      async function fetchPrayerTimes() {
-        // Define your city, country, and method (calculation method 12)
-        const city = "Chur";
-        const country = "Switzerland";
-        const method = 12;
-        const apiUrl = `https://api.aladhan.com/v1/timingsByCity?city=${city}&country=${country}&method=${method}`;
+    async function fetchPrayerTimes() {
+      const city = "Chur";
+      const country = "Switzerland";
+      const method = 12;
+      const apiUrl = `https://api.aladhan.com/v1/timingsByCity?city=${city}&country=${country}&method=${method}`;
 
-        // Define individual offsets in minutes for each prayer time
-        const offsets = { //corrections on 06.04.25
-          Fajr: -7, // Subtract 7 minutes
-          Dhuhr: 0, // Add 0 minutes
-          Asr: -1, // Add 1 minutes
-          Maghrib: 1, // Add 0 minutes
-          Isha: 8, // Add 8 minutes
-        };
+      // your per-prayer offsets (keeps your corrections)
+      const offsets = {
+        Fajr: -6,
+        Dhuhr: 0,
+        Asr: -2,
+        Maghrib: 0,
+        Isha: 7
+      };
 
-        try {
-          const response = await fetch(apiUrl);
-          const data = await response.json();
+      const iqamahOffset = 15; // minutes after adhan -> Gebet (change this variable to adjust globally)
+      // If you want Isha Gebet to be fixed regardless of adhan, set a time here (e.g. "19:30"), otherwise set null
+      const ishaFixedTime = null; // or "19:30"
 
-          // Check if data is valid
-          if (data && data.data && data.data.timings) {
-            const timings = data.data.timings;
-            // Apply individual offsets to each prayer time
-            document.getElementById("fajr").textContent = adjustTime(
-              timings.Fajr,
-              offsets.Fajr
-            );
-            document.getElementById("dhuhr").textContent = adjustTime(
-              timings.Dhuhr,
-              offsets.Dhuhr
-            );
-            document.getElementById("asr").textContent = adjustTime(
-              timings.Asr,
-              offsets.Asr
-            );
-            document.getElementById("maghrib").textContent = adjustTime(
-              timings.Maghrib,
-              offsets.Maghrib
-            );
-            document.getElementById("isha").textContent = adjustTime(
-              timings.Isha,
-              offsets.Isha
-            );
-            // document.getElementById("tarawih").textContent = adjustTime(
-            //   timings.Isha,
-            //   offsets.Isha + 30
-            // );
-          } else {
-            throw new Error("Prayer times data not available");
-          }
-        } catch (error) {
-          console.error("Error fetching prayer times:", error);
-          // Fallback to static times (dummy values)
-          document.getElementById("prayerTimes").innerHTML = `
-                    <p⚠️ Live-Zeiten nicht verfügbar.</p>
-                    <div class="prayer-time-item"><span>Fajr:</span> --:--</div>
-                    <div class="prayer-time-item"><span>Dhuhr:</span> --:--</div>
-                    <div class="prayer-time-item"><span>Asr:</span> --:--</div>
-                    <div class="prayer-time-item"><span>Maghrib:</span> --:--</div>
-                    <div class="prayer-time-item"><span>Isha:</span> --:--</div>
-                  `;
+      try {
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+        if (!data || !data.data || !data.data.timings) throw new Error("Prayer times data not available");
+
+        const timings = data.data.timings;
+
+        // compute adhān strings (apply offsets), then compute iqamah as adhān + iqamahOffset
+        const fajrAdhan = adjustTime(timings.Fajr, offsets.Fajr);
+        const dhuhrAdhan = adjustTime(timings.Dhuhr, offsets.Dhuhr);
+        const asrAdhan = adjustTime(timings.Asr, offsets.Asr);
+        const maghribAdhan = adjustTime(timings.Maghrib, offsets.Maghrib);
+        const ishaAdhan = adjustTime(timings.Isha, offsets.Isha);
+
+        // set adhān displays
+        document.getElementById("fajr_adhan").textContent = fajrAdhan;
+        document.getElementById("dhuhr_adhan").textContent = dhuhrAdhan;
+        document.getElementById("asr_adhan").textContent = asrAdhan;
+        document.getElementById("maghrib_adhan").textContent = maghribAdhan;
+        document.getElementById("isha_adhan").textContent = ishaAdhan;
+
+        // set iqamah (Gebet) displays = adhān + iqamahOffset (or override for isha)
+        const fajrP = document.getElementById("fajr_gebet");
+        fajrP.className = "";
+        fajrP.textContent = `${adjustTime(fajrAdhan, 30)}`;
+
+        const dhuhrP = document.getElementById("dhuhr_gebet");
+        dhuhrP.className = "";
+        dhuhrP.textContent = `${adjustTime(dhuhrAdhan, iqamahOffset)}`;
+
+        const asrP = document.getElementById("asr_gebet");
+        asrP.className = "";
+        asrP.textContent = `${adjustTime(asrAdhan, iqamahOffset)}`;
+
+        const maghribP = document.getElementById("maghrib_gebet");
+        maghribP.className = "";
+        maghribP.textContent = `${adjustTime(maghribAdhan, iqamahOffset)}`;
+
+        const ishaP = document.getElementById("isha_gebet");
+        ishaP.className = "";
+        if (ishaFixedTime) {
+          ishaP.textContent = `${ishaFixedTime}`;
+        } else {
+          ishaP.textContent = `19:30`;
         }
+
+        // Juma static example
+        document.getElementById("juma").textContent = "12:30";
+        document.getElementById("juma_note").textContent = ""; // no Khutba note
+
+      } catch (error) {
+        console.error("Error fetching prayer times:", error);
+        // keep your fallback behavior (you can also set the adhān + gebet fallbacks here)
+        document.getElementById("prayerTimes").innerHTML = `
+      <p>⚠️ Live-Zeiten nicht verfügbar.</p>
+      <div class="prayer-time-item"><span>Fajr:</span> --:--</div>
+      <div class="prayer-time-item"><span>Dhuhr:</span> --:--</div>
+      <div class="prayer-time-item"><span>Asr:</span> --:--</div>
+      <div class="prayer-time-item"><span>Maghrib:</span> --:--</div>
+      <div class="prayer-time-item"><span>Isha:</span> --:--</div>
+      <div class="prayer-time-item"><span>Juma:</span> --:--</div>
+    `;
       }
+    }
 
-      // Mobile sidebar toggle
-      const menuToggle = document.getElementById("menuToggle");
-      const sidebar = document.getElementById("sidebar");
-      const closeSidebar = document.getElementById("closeSidebar");
-      const overlay = document.getElementById("overlay");
+    // Mobile sidebar toggle
+    const menuToggle = document.getElementById("menuToggle");
+    const sidebar = document.getElementById("sidebar");
+    const closeSidebar = document.getElementById("closeSidebar");
+    const overlay = document.getElementById("overlay");
 
-      menuToggle.addEventListener("click", () => {
-        sidebar.classList.toggle("open");
-        overlay.classList.toggle("visible");
-      });
-      closeSidebar.addEventListener("click", () => {
-        sidebar.classList.remove("open");
-        overlay.classList.remove("visible");
-        menuToggle.style.display = "block"; // Show hamburger again
-      });
-      overlay.addEventListener("click", () => {
-        sidebar.classList.remove("open");
-        overlay.classList.remove("visible");
-      });
+    menuToggle.addEventListener("click", () => {
+      sidebar.classList.toggle("open");
+      overlay.classList.toggle("visible");
+    });
+    closeSidebar.addEventListener("click", () => {
+      sidebar.classList.remove("open");
+      overlay.classList.remove("visible");
+      menuToggle.style.display = "block"; // Show hamburger again
+    });
+    overlay.addEventListener("click", () => {
+      sidebar.classList.remove("open");
+      overlay.classList.remove("visible");
+    });
 
-      // Fetch prayer times on page load and refresh every hour
-      fetchPrayerTimes();
-      setInterval(fetchPrayerTimes, 3600000);
+    // Fetch prayer times on page load and refresh every hour
+    fetchPrayerTimes();
+    setInterval(fetchPrayerTimes, 3600000);
 
-      async function fetchKnowledge() {
-        try {
-          const response = await fetch("Wissen.txt");
+    async function fetchKnowledge() {
+      try {
+        const response = await fetch("Wissen.txt");
 
-          if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-          }
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
 
-          const text = await response.text();
-          console.log("Fetched Text:", text); // Debugging log
+        const text = await response.text();
+        console.log("Fetched Text:", text); // Debugging log
 
-          const snippets = text
-            .split("---")
-            .map((s) => s.trim())
-            .filter((s) => s.length > 0);
-          console.log("Extracted Snippets:", snippets); // Debugging log
+        const snippets = text
+          .split("---")
+          .map((s) => s.trim())
+          .filter((s) => s.length > 0);
+        console.log("Extracted Snippets:", snippets); // Debugging log
 
-          if (snippets.length > 0) {
-            const randomIndex = Math.floor(Math.random() * snippets.length);
-            const formattedText = snippets[randomIndex].replace(/\n/g, "<br>"); // Preserve line breaks
-            document.getElementById("randomKnowledge").innerHTML =
-              formattedText;
-          } else {
-            document.getElementById("randomKnowledge").textContent =
-              "Keine Wissens-Snippets gefunden.";
-          }
-        } catch (error) {
-          console.error("Error fetching knowledge:", error);
+        if (snippets.length > 0) {
+          const randomIndex = Math.floor(Math.random() * snippets.length);
+          const formattedText = snippets[randomIndex].replace(/\n/g, "<br>"); // Preserve line breaks
+          document.getElementById("randomKnowledge").innerHTML =
+            formattedText;
+        } else {
           document.getElementById("randomKnowledge").textContent =
-            "Fehler beim Laden des Wissens.";
+            "Keine Wissens-Snippets gefunden.";
         }
+      } catch (error) {
+        console.error("Error fetching knowledge:", error);
+        document.getElementById("randomKnowledge").textContent =
+          "Fehler beim Laden des Wissens.";
       }
-      fetchKnowledge();
-    </script>
-  </body>
+    }
+    fetchKnowledge();
+  </script>
+</body>
+
 </html>
