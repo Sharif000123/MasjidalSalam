@@ -514,8 +514,8 @@
         Fajr: -7,
         Dhuhr: 0,
         Asr: 1,
-        Maghrib: 2,
-        Isha: 10
+        Maghrib: 1,
+        Isha: 9
       };
 
       const iqamahOffset = 15; // minutes after adhan -> Gebet (change this variable to adjust globally)
@@ -570,8 +570,13 @@
 
         const tarawihAdhan = adjustTime(ishaAdhan, 30);
         const tarawihP = document.getElementById("tarawih");
-        tarawihP.className = "";
-        tarawihP.textContent = tarawihAdhan;
+        // tarawihP.className = "";
+        // tarawihP.textContent = tarawihAdhan;
+        if (tarawihP) {
+          const tarawihAdhan = adjustTime(ishaAdhan, 30);
+          tarawihP.className = "";
+          tarawihP.textContent = tarawihAdhan;
+        }
 
         // Juma static example
         document.getElementById("juma").textContent = "12:30";
